@@ -19,6 +19,7 @@
   "license": "MIT",
   "dependencies": {
     "bootstrap": "~3.1.1",
-    "angular": "~1.2.16"
+    "angular": "~1.2.16",
+    "ngstorage": "^0.3.11"
   }
 }

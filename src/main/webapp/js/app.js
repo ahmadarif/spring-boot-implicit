@@ -8,8 +8,6 @@ app.config(function($locationProvider){
 
 app.controller('NavCtrl', function ($scope, $window, $location, $http) {
     $scope.authUrl = 'http://localhost:8080/sso/oauth/authorize?client_id=clientimplicit&response_type=token';
-    // $scope.authUrl = 'http://localhost:10000/sso/oauth/authorize?client_id=clientimplicit&response_type=token';
-    // $scope.authUrl = 'http://10.254.62.38:8080/sso/oauth/authorize?client_id=etpa5&response_type=token&scope=write';
 
     $scope.token;
     
@@ -23,7 +21,8 @@ app.controller('NavCtrl', function ($scope, $window, $location, $http) {
        const url = `http://localhost:8080/sso/logout?token=${token}&redirect=${$scope.authUrl}`;
 
        $window.sessionStorage.removeItem('token');
-       $window.location.href = url;
+       // $window.location.href = url;
+       window.location.replace(url);
    };
    
    $scope.getTokenFromUrl = function(){
