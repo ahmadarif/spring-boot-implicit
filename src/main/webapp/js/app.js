@@ -1,12 +1,12 @@
 'use strict';
 
-const app = angular.module('aplikasiOauthClient', []);
+const app = angular.module('aplikasiOauthClient', ['ngStorage']);
 
 app.config(function($locationProvider){
     $locationProvider.html5Mode(true);
 });
 
-app.controller('NavCtrl', function ($scope, $window, $location, $http) {
+app.controller('NavCtrl', function ($scope, $window, $location, $http, $localStorage) {
     $scope.authUrl = 'http://localhost:8080/sso/oauth/authorize?client_id=clientimplicit&response_type=token';
 
     $scope.token;
@@ -17,12 +17,11 @@ app.controller('NavCtrl', function ($scope, $window, $location, $http) {
     };
    
    $scope.logout = function(){
-       const token = $window.sessionStorage.getItem('token');
+       const token = $localStorage.token;
        const url = `http://localhost:8080/sso/logout?token=${token}&redirect=${$scope.authUrl}`;
 
-       $window.sessionStorage.removeItem('token');
-       // $window.location.href = url;
-       window.location.replace(url);
+       delete $localStorage.token;
+       $window.location.href = url;
    };
    
    $scope.getTokenFromUrl = function(){
@@ -42,23 +41,24 @@ app.controller('NavCtrl', function ($scope, $window, $location, $http) {
        }
        console.log("Access Token : "+token);
        if(token){
-           $window.sessionStorage.setItem('token', token);
+           $localStorage.token = token;
        }
        $location.hash('');
    };
    
    $scope.checkLogin = function(){
        // check apa ada token di URL
-       if($window.sessionStorage.getItem('token')){
-           $scope.token = $window.sessionStorage.getItem('token');
+       if($localStorage.token){
+           $scope.token = $localStorage.token;
 
            $scope.validasiToken();
            return;
        }
 
        $scope.getTokenFromUrl();
-       if($window.sessionStorage.getItem('token')){
-           $scope.token = $window.sessionStorage.getItem('token');
+
+       if($localStorage.token){
+           $scope.token = $localStorage.token;
            return;
        }
        
@@ -76,7 +76,7 @@ app.controller('NavCtrl', function ($scope, $window, $location, $http) {
            .success(function(data){
                $scope.checkTokenOutput = data;
            }).error(function(data){
-               $window.sessionStorage.removeItem('token');
+               delete $localStorage.token;
                $window.location.href = $scope.authUrl;
            });
    };
@@ -85,9 +85,9 @@ app.controller('NavCtrl', function ($scope, $window, $location, $http) {
 });
 
 
-app.controller('OauthCtrl', function($scope, $http, $window){
+app.controller('OauthCtrl', function($scope, $http, $window, $localStorage){
    $scope.currentUser; 
-   $scope.accessToken = $window.sessionStorage.getItem('token');
+   $scope.accessToken = $localStorage.token;
 
    $scope.userApi = function(){
        if(!$scope.accessToken) {
