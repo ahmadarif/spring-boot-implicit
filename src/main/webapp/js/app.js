@@ -12,8 +12,8 @@ app.controller('NavCtrl', function ($scope, $window, $location, $http, $localSto
     $scope.token;
     
     $scope.login = function(){
-        $window.location.href = $scope.authUrl;
-        //$window.location.reload();
+        // $window.location.href = $scope.authUrl;
+        window.location.assign($scope.authUrl);
     };
    
    $scope.logout = function(){
@@ -21,7 +21,8 @@ app.controller('NavCtrl', function ($scope, $window, $location, $http, $localSto
        const url = `http://localhost:8080/sso/logout?token=${token}&redirect=${$scope.authUrl}`;
 
        delete $localStorage.token;
-       $window.location.href = url;
+       // $window.location.href = url;
+       window.location.assign(url);
    };
    
    $scope.getTokenFromUrl = function(){
