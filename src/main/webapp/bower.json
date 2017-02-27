@@ -1,24 +1,22 @@
 {
-  "name": "client-implicit-angular",
-  "version": "0.0.0",
+  "name": "spring-boot-implicit",
+  "homepage": "https://github.com/ahmadarif/spring-boot-implicit",
   "authors": [
-    "Endy Muhardin <endy.muhardin@gmail.com>"
+    "Ahmad Arif <ahmad.arif019@gmail.com>"
   ],
-  "description": "OAuth 2 Client dengan Grant Type Implicit menggunakan AngularJS",
-  "main": "index.html",
-  "moduleType": [
-    "globals"
+  "description": "OAuth 2 Client dengan Grant Type Implicit",
+  "main": "",
+  "keywords": [
+    "spring",
+    "spring-boot",
+    "oauth2",
+    "implicit",
+    "angular",
+    "Single",
+    "Page",
+    "Application"
   ],
   "license": "MIT",
-  "homepage": "https://github.com/endymuhardin/belajar-springoauth2",
-  "private": true,
-  "ignore": [
-    "**/.*",
-    "node_modules",
-    "bower_components",
-    "test",
-    "tests"
-  ],
   "dependencies": {
     "bootstrap": "~3.1.1",
     "angular": "~1.2.16"

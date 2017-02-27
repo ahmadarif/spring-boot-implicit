@@ -1,6 +1,6 @@
 'use strict';
 
-var app = angular.module('aplikasiOauthClient',[]);
+const app = angular.module('aplikasiOauthClient', []);
 
 app.config(function($locationProvider){
     $locationProvider.html5Mode(true);
@@ -19,22 +19,24 @@ app.controller('NavCtrl', function ($scope, $window, $location, $http) {
     };
    
    $scope.logout = function(){
-       var token = $window.sessionStorage.getItem('token');
-       console.log('Token : '+token);
+       const token = $window.sessionStorage.getItem('token');
+       const url = `http://localhost:8080/sso/logout?token=${token}&redirect=${$scope.authUrl}`;
+
        $window.sessionStorage.removeItem('token');
+       $window.location.href = url;
    };
    
    $scope.getTokenFromUrl = function(){
-       var token;
-       var hashParams = $location.hash();
+       let token;
+       let hashParams = $location.hash();
        if(!hashParams) {
            console.log("Tidak ada token di url");
            return;
        }
        console.log(hashParams);
-       var eachParam = hashParams.split('&');
-       for(var i=0; i<eachParam.length; i++){
-           var param = eachParam[i].split('=');
+       const eachParam = hashParams.split('&');
+       for(let i=0; i<eachParam.length; i++){
+           const param = eachParam[i].split('=');
            if('access_token' === param[0]) {
                token = param[1];
            }
@@ -66,7 +68,7 @@ app.controller('NavCtrl', function ($scope, $window, $location, $http) {
 
    $scope.validasiToken = function () {
        console.debug("validasi");
-       var body = {
+       const body = {
            params: {
                access_token: $scope.accessToken
            }
@@ -113,7 +115,7 @@ app.controller('OauthCtrl', function($scope, $http, $window){
             return;
         }
 
-        var body = {
+        const body = {
             params: {
                 access_token: $scope.accessToken
             }
@@ -132,7 +134,7 @@ app.controller('OauthCtrl', function($scope, $http, $window){
            return;
        }
 
-       var body = {
+       const body = {
            params: {
                access_token: $scope.accessToken
            }
@@ -146,7 +148,7 @@ app.controller('OauthCtrl', function($scope, $http, $window){
    };
 
     $scope.currentUserApi = function(){
-        var body = {
+        const body = {
             params: {
                 access_token: $scope.accessToken
             }
