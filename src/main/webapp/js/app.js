@@ -124,8 +124,8 @@ app.controller('OauthCtrl', function($scope, $http, $window, $localStorage){
             .success(function(data){
                 $scope.adminApiOutput = data;
             }).error(function(data){
-            if (data.error) alert(data.error);
-        });
+                if (data.error) alert(data.error);
+            });
     };
    
    $scope.checkToken = function(){
